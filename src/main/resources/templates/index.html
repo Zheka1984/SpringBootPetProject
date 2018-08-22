@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <h1>Что вы хотите сделать?</h1>      
+        <button type="button" 
+            th:onclick="|window.location.href = '@{/enter}'|">Завести нового</button>
+            <button type="button" 
+            th:onclick="|window.location.href = '@{/find}'|">Найти животного</button>
+            <button type="button" 
+            onclick="location = 'replace.jsp'">Изменить данные животного или владельца</button>
+            <button type="button" 
+            th:onclick="|window.location.href = '@{/petDel}'|">Удалить животного</button>
+        <div th:text="${message}"></div>
+            </body>
+</html>

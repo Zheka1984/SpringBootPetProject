@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <title>search page</title>
+    </head>
+    <body>
+        <h1>Данные для поиска и изменения животного</h1>
+        <form action="#" th:action="@{/petsForChange}" th:object="${formChange}" method="post">
+            <input type="text" placeholder="Введите имя животного" th:field="*{petName} ">       
+                <input type="number" placeholder="Введите возраст животного" th:field="*{petAge}" min="1">             
+                    <input type="text" placeholder="Введите диагноз животного" th:field="*{petDiagnosis}">
+                        <!--<input type="hidden" th:value="'false'" th:name="*{isPetWillChanged}"/>-->
+                        <p><button type="submit">Submit</button></p>
+                        </form>
+
+                        <form action="#" th:action="@{/changeAllPets}" th:object="${allPets}"  method="post">
+                            <input type="hidden" th:field="${pet1.petAge}"/>
+                            <input type="hidden" th:field="${pet1.petDiagnosis}"/>
+                            <input type="hidden" th:field="${pet1.petName}"/>  
+
+                            <p>Введите новые данные животного</p>          
+                            <input type="text" placeholder="Введите имя животного" th:field="*{newPetName}">       
+                                <input type="number" placeholder="Введите возраст животного" th:field="*{newPetAge}" min="1">             
+                                    <input type="text" placeholder="Введите диагноз животного" th:field="*{newPetDiagnosis}">
+                                        <button type="submit">Изменить всех найденных животных</button>    
+                                        </form> 
+                                        <div> <ul th:each="client: ${clientList}" >                   
+                                                <ul th:each="pet : ${petList}" th:inline="text" th:object="${petChange}">
+                                                    <li th:if="${client.id} == ${pet.id}" type="disc">Хозяин: [[${client.petOwner}]]</li>
+                                                    <li th:if="${client.id} == ${pet.id}"  th:text="${pet.petName}"></li> 
+
+                                                    <form action="#" th:action="@{/changePet}"   method="post">
+                                                        <input type="hidden" th:value="${pet.getPetName()}" name="petName"/>
+                                                        <input type="hidden" th:value="${pet.getId()}" name="petId"/>
+                                                        <input type="hidden" th:value="${pet.getPetDiagnosis()}" name="petDiagnosis"/>
+                                                        <input type="hidden" th:value="${pet.getPetAge()}" name="petAge"/>
+
+                                                        <ul th:if="${client.id} == ${pet.id}">
+                                                            <p>Введите новые данные животного</p>          
+                                                            <input type="text" placeholder="Введите имя животного" th:field="*{newPetName}">       
+                                                                <input type="number" placeholder="Введите возраст животного" th:field="*{newPetAge}" min="1">             
+                                                                    <input type="text" placeholder="Введите диагноз животного" th:field="*{newPetDiagnosis}">  
+                                                                        <button type="submit" >Изменить одного зверя</button>
+                                                                        </ul>  
+                                                                        </form>
+
+                                                                        </ul>  
+                                                                        </ul> 
+                                                                        </div>        
+                                                                        </body>
+

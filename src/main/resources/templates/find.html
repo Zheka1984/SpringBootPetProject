@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>search page</title>
+</head>
+    <body>
+       <h1>Данные для поиска</h1>
+       <p >Введите данные владельца животного:</p>
+       <form action="#" th:action="@{/find}" th:object="${form1}" method="post">
+       <td><input type="text" th:field="*{petOwner}" placeholder="Введите имя владельца животного" required></td>
+       <input type="tel" th:field="*{ownerPhone}" placeholder="Введите телефон владельца животного" required>
+           <p >Введите данные животного:</p>
+           <input type="text" placeholder="Введите имя животного" th:field="*{petName}">       
+        <input type="number" placeholder="Введите возраст животного" th:field="*{petAge}" min="1">             
+        <input type="text" placeholder="Введите диагноз животного" th:field="*{petDiagnosis}">
+           <p><button type="submit">Submit</button></p>
+           </form>
+       <ul th:each="client: ${clientList}" >
+           <li th:text="${client.petOwner}" font-weight: bold></li>
+           <ul th:each="pet : ${petList}">
+               <li th:if="${client.id} == ${pet.id}" th:text="${pet.petName}"></li>
+           </ul>
+       </ul>
+    </body>
