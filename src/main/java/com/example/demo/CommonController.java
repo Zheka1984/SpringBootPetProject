@@ -320,6 +320,18 @@ if(form.getPetAge3()!=null)
       model.addAttribute("message", message);
         return "index"; 
     }
+    @PostMapping("/changeAllClients")
+    public String changeAllClients(@ModelAttribute("allClients") OldNewClients form, Model model){
+         String message = "нечего изменять";
+       String sql = "UPDATE clienttest SET ";
+       String sql1 = "", sql2 = "", sql3 = "", sql4 = "";
+       if(form.getOwnerPhone()!=""){
+           sql1 = "ownerphone='"+form.getOwnerPhone()+"'";
+       if(form.getPetOwner()!="")
+           sql2 = ", petowner='"+form.getPetOwner()+"'";}
+       
+           
+    }
     public boolean isClientIsEmpty(InputForm form){
         if (clientInterface.findBypetOwnerAndOwnerPhone(form.getPetOwner(), form.getOwnerPhone()).isEmpty())
                 return true;
