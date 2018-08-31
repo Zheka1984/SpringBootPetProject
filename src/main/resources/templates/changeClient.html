@@ -8,8 +8,8 @@
     <body>
         <h1>Данные для поиска и изменения владельца</h1>
         <form action="#" th:action="@{/clientsForChange}" th:object="${formChange}" method="post">
-            <input type="text" placeholder="Введите имя владельца животного" th:field="*{clientName} ">       
-                <input type="number" placeholder="Введите телефон владельца" th:field="*{clientPhone}">             
+            <input type="text" placeholder="Введите имя владельца животного" th:field="*{petOwner} ">       
+                <input type="number" placeholder="Введите телефон владельца" th:field="*{ownerPhone}">             
                         <p><button type="submit">Submit</button></p>
                         </form>
 
@@ -23,14 +23,14 @@
                                         <button type="submit">Изменить всех найденных людей</button>    
                                         </form> 
                                         <div> <ul th:each="client: ${clientList}" >                   
-                                                <ul th:each="pet : ${petList}" th:inline="text" th:object="${petChange}">
+                                                <ul th:each="pet : ${petList}" th:inline="text" th:object="${clientChange}">
                                                     <li th:if="${client.id} == ${pet.id}" type="disc">Хозяин: [[${client.petOwner}]]</li>
                                                     <li th:if="${client.id} == ${pet.id}"  th:text="${pet.petName}"></li> 
 
                                                     <form action="#" th:action="@{/changeClient}"   method="post">
                                                         <input type="hidden" th:value="${client.getId()}" name="petId"/>
-                                                        <input type="hidden" th:field="${client.petOwner}"/>
-                                                        <input type="hidden" th:field="${client.ownerPhone}"/>   
+                                                        <input type="hidden" th:value="${client.getPetOwner()}" name="petOwner"/>
+                                                        <input type="hidden" th:value="${client.getOwnerPhone()}" name="ownerPhone"/>   
 
                                                         <ul th:if="${client.id} == ${pet.id}">
                                                             <p>Введите новые данные клиента</p>          

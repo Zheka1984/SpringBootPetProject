@@ -332,13 +332,27 @@ if(form.getPetAge3()!=null)
        model.addAttribute("allClients", onc);
        return "changeClient";
     }
+    @PostMapping("/clientsForChange")
+    public String clientsForChange(@ModelAttribute("formChange") Form form, Model model){
+        OldNewClients onc = new OldNewClients();
+        String petSql = findPets(form);
+        List<Pets> petList = jdbcTemplate.query(petSql, new PetsMapper());
+         String clientSql = findClients(form);      
+        List<Clients> clientList = jdbcTemplate.query(clientSql, new ClientsMapper());
+        model.addAttribute("petList", petList);
+       model.addAttribute("client1", form);
+     model.addAttribute("clientList", clientList);
+     model.addAttribute("allClients", onc);
+     model.addAttribute("clientChange", onc);
+        return "changeClient"; 
+    }
     @PostMapping("/changeAllClients")
     public String changeAllClients(@ModelAttribute("allClients") OldNewClients form, Model model){
          String message = "нечего изменять";
        String sql = "UPDATE clienttest SET ";
        String sql1 = "", sql2 = "", sql3 = "", sql4 = "";
        if(form.getNewOwnerPhone()!=""){
-           sql1 = "ownerphone='"+form.getOwnerPhone()+"'";
+           sql1 = "ownerphone='"+form.getNewOwnerPhone()+"'";
        if(form.getNewPetOwner()!="")
            sql2 = ", petowner='"+form.getNewPetOwner()+"'";}
        if (form.getNewOwnerPhone()==""&&form.getNewPetOwner()!="")
@@ -359,6 +373,10 @@ if(form.getPetAge3()!=null)
        jdbcTemplate.execute(sql);
       model.addAttribute("message", message);
         return "index";      
+    }
+    @PostMapping("/changeClient")
+    public String changeClient(@ModelAttribute("clientChange") OldNewClients form, Model model){
+        
     }
     public boolean isClientIsEmpty(InputForm form){
         if (clientInterface.findBypetOwnerAndOwnerPhone(form.getPetOwner(), form.getOwnerPhone()).isEmpty())

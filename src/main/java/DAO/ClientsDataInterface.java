@@ -45,4 +45,5 @@ public interface ClientsDataInterface extends JpaRepository <Clients, Long> {
   @Query(value = "delete from clienttest where id not in (select max(dup.id)\n" +
 "from clienttest as dup group by dup.petowner, dup.ownerphone) ", nativeQuery = true)
   public int deleteRepeated();
+  
 }
