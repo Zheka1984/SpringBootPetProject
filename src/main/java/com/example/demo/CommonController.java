@@ -294,7 +294,7 @@ if(form.getPetAge3()!=null)
     }
     @PostMapping("/changePet")
     public String changePet(@ModelAttribute("petChange") OldNewPets form, Model model){
-        String message = "животное не изменено";
+        String message = "животное изменено";
       String sql = "Update pettest set ";
       String sql1 = "", sql2 = "", sql3 = "", sql4 = " where petid="+petInterface.extractPetId(form.getPetId(), 
               Integer.toString(form.getPetAge()), form.getPetDiagnosis(), form.getPetName());
@@ -310,27 +310,55 @@ if(form.getPetAge3()!=null)
       if(form.getNewPetDiagnosis()!=""&&form.getNewPetName()==""&&form.getNewPetAge()!=null)
           sql3 = "petdiagnosis='"+form.getNewPetDiagnosis()+"'";
       if(form.getNewPetDiagnosis()==""&form.getNewPetName()==""&form.getNewPetAge()==null){
+          message = "нечего менять";
           model.addAttribute("message", message);
         return "index";   
       }
        sql = sql + sql1 + sql2 + sql3 + sql4;
         System.out.println(sql);
        jdbcTemplate.execute(sql);
-       message = "животное изменено";
       model.addAttribute("message", message);
         return "index"; 
+    }
+    @GetMapping("/changeClient")
+    public String changeClient(Model model){
+         Form form = new Form();
+       OldNewClients onc = new OldNewClients(); 
+        model.addAttribute("client1", form);
+       model.addAttribute("client2", form);
+       model.addAttribute("clientChange", onc);
+       model.addAttribute("formChange", form);
+       model.addAttribute("oldform", form);
+       model.addAttribute("allClients", onc);
+       return "changeClient";
     }
     @PostMapping("/changeAllClients")
     public String changeAllClients(@ModelAttribute("allClients") OldNewClients form, Model model){
          String message = "нечего изменять";
        String sql = "UPDATE clienttest SET ";
        String sql1 = "", sql2 = "", sql3 = "", sql4 = "";
-       if(form.getOwnerPhone()!=""){
+       if(form.getNewOwnerPhone()!=""){
            sql1 = "ownerphone='"+form.getOwnerPhone()+"'";
-       if(form.getPetOwner()!="")
-           sql2 = ", petowner='"+form.getPetOwner()+"'";}
-       
-           
+       if(form.getNewPetOwner()!="")
+           sql2 = ", petowner='"+form.getNewPetOwner()+"'";}
+       if (form.getNewOwnerPhone()==""&&form.getNewPetOwner()!="")
+           sql2 = "petowner='"+form.getNewPetOwner()+"'";
+       if (form.getOwnerPhone()!=""){
+           sql3 = " where ownerphone='"+form.getOwnerPhone()+"'";
+           if(form.getPetOwner()!="")
+               sql4 = " and petowner='"+form.getPetOwner()+"'";
+       }
+       if(form.getOwnerPhone()==""&&form.getPetOwner()!="")
+           sql4 = " where petowner='"+form.getPetOwner()+"'";
+       if(form.getOwnerPhone()==""&&form.getPetOwner()==""){
+           model.addAttribute("message", message);
+       }
+        message = "клиент изменен";
+        model.addAttribute("message", message);    
+       sql = sql + sql1 + sql2 + sql3 + sql4;
+       jdbcTemplate.execute(sql);
+      model.addAttribute("message", message);
+        return "index";      
     }
     public boolean isClientIsEmpty(InputForm form){
         if (clientInterface.findBypetOwnerAndOwnerPhone(form.getPetOwner(), form.getOwnerPhone()).isEmpty())

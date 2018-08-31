@@ -13,6 +13,8 @@ public class OldNewClients {
     private Integer id;
     private String petOwner;
     private String ownerPhone;
+    private String newPetOwner;
+    private String newOwnerPhone;
 
     public Integer getId() {
         return id;
@@ -36,5 +38,21 @@ public class OldNewClients {
 
     public void setOwnerPhone(String ownerPhone) {
         this.ownerPhone = ownerPhone;
+    }
+
+    public String getNewPetOwner() {
+        return newPetOwner;
+    }
+
+    public void setNewPetOwner(String newPetOwner) {
+        this.newPetOwner = newPetOwner;
+    }
+
+    public String getNewOwnerPhone() {
+        return newOwnerPhone;
+    }
+
+    public void setNewOwnerPhone(String newOwnerPhone) {
+        this.newOwnerPhone = newOwnerPhone;
     }
 }
