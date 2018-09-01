@@ -46,4 +46,5 @@ public interface ClientsDataInterface extends JpaRepository <Clients, Long> {
 "from clienttest as dup group by dup.petowner, dup.ownerphone) ", nativeQuery = true)
   public int deleteRepeated();
   
+  
 }

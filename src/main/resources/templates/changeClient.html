@@ -28,7 +28,7 @@
                                                     <li th:if="${client.id} == ${pet.id}"  th:text="${pet.petName}"></li> 
 
                                                     <form action="#" th:action="@{/changeClient}"   method="post">
-                                                        <input type="hidden" th:value="${client.getId()}" name="petId"/>
+                                                        <input type="hidden" th:value="${client.getId()}" name="id"/>
                                                         <input type="hidden" th:value="${client.getPetOwner()}" name="petOwner"/>
                                                         <input type="hidden" th:value="${client.getOwnerPhone()}" name="ownerPhone"/>   
 

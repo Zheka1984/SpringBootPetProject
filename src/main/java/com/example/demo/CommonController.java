@@ -315,7 +315,6 @@ if(form.getPetAge3()!=null)
         return "index";   
       }
        sql = sql + sql1 + sql2 + sql3 + sql4;
-        System.out.println(sql);
        jdbcTemplate.execute(sql);
       model.addAttribute("message", message);
         return "index"; 
@@ -376,7 +375,25 @@ if(form.getPetAge3()!=null)
     }
     @PostMapping("/changeClient")
     public String changeClient(@ModelAttribute("clientChange") OldNewClients form, Model model){
-        
+        String message = "клиент изменен";
+        String sql="update clienttest set ", sql1="", sql2="", sql3=" where id='"+form.getId()+"'";
+        if(form.getNewOwnerPhone()!=""){
+            sql1 = "ownerphone='"+form.getNewOwnerPhone()+"'";
+            if(form.getNewPetOwner()!="")
+                sql2 = " and petowner='"+form.getNewPetOwner()+"'";
+        }
+        if(form.getNewPetOwner()!=""&&form.getNewOwnerPhone()=="")
+            sql2 = "petowner='"+form.getNewPetOwner()+"'";
+        if(form.getNewPetOwner()==""&&form.getNewOwnerPhone()==""){
+           message = "нечего менять";
+          model.addAttribute("message", message);
+        return "index";  
+        }
+          sql = sql + sql1 + sql2 + sql3; 
+          System.out.println(sql);
+           jdbcTemplate.execute(sql);
+      model.addAttribute("message", message);
+        return "index";        
     }
     public boolean isClientIsEmpty(InputForm form){
         if (clientInterface.findBypetOwnerAndOwnerPhone(form.getPetOwner(), form.getOwnerPhone()).isEmpty())
