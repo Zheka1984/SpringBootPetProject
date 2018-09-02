@@ -270,16 +270,16 @@ if(form.getPetAge3()!=null)
              sql3 = "petdiagnosis='"+form.getNewPetDiagnosis()+"'";
 
         if(form.getPetName()!="")
-            sql4 = " where petname='"+form.getPetName()+"'";
+            sql4 = " where petname like "+"'%"+form.getPetName()+"%'";
         if(form.getPetName()!=""&form.getPetAge()!=null)
-            sql5 = " and petage='"+form.getPetAge()+"'";
+            sql5 = " and petage like "+"'%"+form.getPetAge()+"%'";
         if(form.getPetName()==""&form.getPetAge()!=null)
-            sql5 = " where petage='"+form.getPetAge()+"'";
+            sql5 = " where petage like "+"'%"+form.getPetAge()+"'";
         if(form.getPetDiagnosis()!=""&((form.getNewPetName()!=""|form.getPetAge()!=null)&(form.getPetName()!=""&
                 form.getPetAge()!=null)))
-           sql6 = " and petdiagnosis='"+form.getPetDiagnosis()+"'"; 
+           sql6 = " and petdiagnosis like "+"'%"+form.getPetDiagnosis()+"%'"; 
         if(form.getPetDiagnosis()!=""&form.getPetName()==""&form.getPetAge()==null)
-            sql6 = " where petdiagnosis='"+form.getPetDiagnosis()+"'";
+            sql6 = " where petdiagnosis like "+"'%"+form.getPetDiagnosis()+"%'";
         if(form.getNewPetDiagnosis()==""&form.getNewPetName()==""&form.getNewPetAge()==null) {
             System.out.println("нахуй");
             System.out.println(sql1+sql2+sql3+sql4+sql5+sql6);
@@ -357,18 +357,19 @@ if(form.getPetAge3()!=null)
        if (form.getNewOwnerPhone()==""&&form.getNewPetOwner()!="")
            sql2 = "petowner='"+form.getNewPetOwner()+"'";
        if (form.getOwnerPhone()!=""){
-           sql3 = " where ownerphone='"+form.getOwnerPhone()+"'";
+           sql3 = " where ownerphone like "+"'%"+form.getOwnerPhone()+"%'";
            if(form.getPetOwner()!="")
-               sql4 = " and petowner='"+form.getPetOwner()+"'";
+               sql4 = " and petowner like "+"'%"+form.getPetOwner()+"%'";
        }
        if(form.getOwnerPhone()==""&&form.getPetOwner()!="")
-           sql4 = " where petowner='"+form.getPetOwner()+"'";
+           sql4 = " where petowner like "+"'%"+form.getPetOwner()+"%'";
        if(form.getOwnerPhone()==""&&form.getPetOwner()==""){
            model.addAttribute("message", message);
        }
         message = "клиент изменен";
         model.addAttribute("message", message);    
        sql = sql + sql1 + sql2 + sql3 + sql4;
+       System.out.println(sql);
        jdbcTemplate.execute(sql);
       model.addAttribute("message", message);
         return "index";      
@@ -484,11 +485,11 @@ if(form.getPetAge3()!=null)
       String petOwner = "";
       String ownerPhone = "";
       if(form.getPetOwner()!=null)
-          petOwner=" where petowner like '%"+form.getPetOwner()+"'";
+          petOwner=" where petowner like '%"+form.getPetOwner()+"%'";
       if(form.getPetOwner()!=null&form.getOwnerPhone()!=null)
-          ownerPhone=" and ownerphone like '%"+form.getOwnerPhone()+"'";
+          ownerPhone=" and ownerphone like '%"+form.getOwnerPhone()+"%'";
       if(form.getPetOwner()==null&form.getOwnerPhone()!=null)
-          ownerPhone=" where ownerphone like '%"+form.getOwnerPhone()+"'";
+          ownerPhone=" where ownerphone like '%"+form.getOwnerPhone()+"%'";
       return query+petOwner+ownerPhone;
     }
 }

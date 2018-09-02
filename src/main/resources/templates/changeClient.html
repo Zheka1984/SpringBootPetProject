@@ -10,37 +10,38 @@
         <form action="#" th:action="@{/clientsForChange}" th:object="${formChange}" method="post">
             <input type="text" placeholder="Введите имя владельца животного" th:field="*{petOwner} ">       
                 <input type="number" placeholder="Введите телефон владельца" th:field="*{ownerPhone}">             
-                        <p><button type="submit">Submit</button></p>
-                        </form>
+                    <p><button type="submit">Submit</button></p>
+                    </form>
 
-                        <form action="#" th:action="@{/changeAllClients}" th:object="${allClients}"  method="post">
-                            <input type="hidden" th:field="${client1.petOwner}"/>
-                            <input type="hidden" th:field="${client1.ownerPhone}"/>                           
+                    <form action="#" th:action="@{/changeAllClients}" th:object="${allClients}"  method="post">
+                        <input type="hidden" th:field="${client1.petOwner}"/>
+                        <input type="hidden" th:field="${client1.ownerPhone}"/>                           
 
-                            <p>Введите новые данные клиентов</p>          
-                            <input type="text" placeholder="Введите имя клиента" th:field="*{newPetOwner}">       
-                                <input type="number" placeholder="Введите телефон клиента" th:field="*{newOwnerPhone}">             
-                                        <button type="submit">Изменить всех найденных людей</button>    
-                                        </form> 
-                                        <div> <ul th:each="client: ${clientList}" >                   
-                                                <ul th:each="pet : ${petList}" th:inline="text" th:object="${clientChange}">
-                                                    <li th:if="${client.id} == ${pet.id}" type="disc">Хозяин: [[${client.petOwner}]]</li>
+                        <p>Введите новые данные клиентов</p>          
+                        <input type="text" placeholder="Введите имя клиента" th:field="*{newPetOwner}">       
+                            <input type="number" placeholder="Введите телефон клиента" th:field="*{newOwnerPhone}">             
+                                <button type="submit">Изменить всех найденных людей</button>    
+                                </form> 
+                                <div> <ul th:each="client: ${clientList}" th:inline="text" th:object="${clientChange}">  
+                                        <li>Хозяин: [[${client.petOwner}]]</li>
+                                        <ul th:each="pet : ${petList}" >
                                                     <li th:if="${client.id} == ${pet.id}"  th:text="${pet.petName}"></li> 
+                                                </ul>
+                                        <p>Введите новые данные клиента</p>
+                                        <form action="#" th:action="@{/changeClient}"   method="post">
+                                        <input type="text" placeholder="Введите имя владельца животного" th:field="*{newPetOwner}">       
+                                            <input type="number" placeholder="Введите телефон владельца" th:field="*{newOwnerPhone}">               
+                                                <button type="submit" >Изменить одного клиента</button>
+                                                
+                                                
+                                                    <input type="hidden" th:value="${client.getId()}" name="id"/>
+                                                    <input type="hidden" th:value="${client.getPetOwner()}" name="petOwner"/>
+                                                    <input type="hidden" th:value="${client.getOwnerPhone()}" name="ownerPhone"/>   
 
-                                                    <form action="#" th:action="@{/changeClient}"   method="post">
-                                                        <input type="hidden" th:value="${client.getId()}" name="id"/>
-                                                        <input type="hidden" th:value="${client.getPetOwner()}" name="petOwner"/>
-                                                        <input type="hidden" th:value="${client.getOwnerPhone()}" name="ownerPhone"/>   
 
-                                                        <ul th:if="${client.id} == ${pet.id}">
-                                                            <p>Введите новые данные клиента</p>          
-                                                            <input type="text" placeholder="Введите имя владельца животного" th:field="*{newPetOwner}">       
-                                                                <input type="number" placeholder="Введите телефон владельца" th:field="*{newOwnerPhone}">               
-                                                                        <button type="submit" >Изменить одного клиента</button>
-                                                                        </ul>  
-                                                                        </form>
+                                                </form>
 
-                                                                        </ul>  
-                                                                        </ul> 
-                                                                        </div>        
-                                                                        </body>
+
+                                                </ul> 
+                                                </div>        
+                                                </body>
