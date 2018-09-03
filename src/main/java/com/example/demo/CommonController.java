@@ -396,6 +396,10 @@ if(form.getPetAge3()!=null)
       model.addAttribute("message", message);
         return "index";        
     }
+    @GetMapping("/login")
+    public String login() {
+        return "/login";
+    }
     public boolean isClientIsEmpty(InputForm form){
         if (clientInterface.findBypetOwnerAndOwnerPhone(form.getPetOwner(), form.getOwnerPhone()).isEmpty())
                 return true;
